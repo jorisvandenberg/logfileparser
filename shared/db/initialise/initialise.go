@@ -2,14 +2,31 @@ package initialise
 
 import (
 	"fmt"
-	_ "github.com/mattn/go-sqlite3"
 	"logfileparser/shared/db/connection"
 	"logfileparser/shared/shared"
+	"os"
+	"path/filepath"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
-func InitialiseDb() error {
+func EndsWithSlash(s string) bool {
+	return len(s) > 0 && s[len(s)-1] == '/'
+}
 
-	db, err := connection.DbConnect(shared.MyConfig.DatabasePath + shared.MyConfig.DatabaseName)
+func InitialiseDb() error {
+	if !EndsWithSlash(shared.MyConfig.DatabasePath) {
+		shared.MyConfig.DatabasePath += "/"
+	}
+
+	if _, err := os.Stat(shared.MyConfig.DatabasePath); os.IsNotExist(err) {
+		err := os.MkdirAll(shared.MyConfig.DatabasePath, 0755)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	db, err := connection.DbConnect(filepath.Join(shared.MyConfig.DatabasePath, shared.MyConfig.DatabaseName))
 	if err != nil {
 		fmt.Println("Error creating connection:", err)
 		return err

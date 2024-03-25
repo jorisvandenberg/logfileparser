@@ -81,7 +81,7 @@ func AddLogLine(MyLogLine shared.LogLine) error {
 	id_server_name := GetIDS(db, true, MyLogLine.Server_name, "server_name", "server_name")
 	id_user_agent := GetIDS(db, true, MyLogLine.User_Agent, "user_agent", "user_agent")
 	id_status_code := GetIDS(db, false, MyLogLine.Status_code, "status_code", "code")
-	//fmt.Printf("%d %d %d %d %d %d %d %d %d %d %d %d %d %d\n", id_cookies, id_headers, id_http_protocol, id_query_parameters, id_referrer, id_remote_hostname, id_remote_ip, id_remote_logname, id_remote_user, id_request_method, id_request_uri, id_server_name, id_user_agent, id_status_code)
+	fmt.Printf("%d %d %d %d %d %d %d %d %d %d %d %d %d %d\n", id_cookies, id_headers, id_http_protocol, id_query_parameters, id_referrer, id_remote_hostname, id_remote_ip, id_remote_logname, id_remote_user, id_request_method, id_request_uri, id_server_name, id_user_agent, id_status_code)
 	//now add logline if it doesn't already exist
 	var count int
 	myTimestamp := MyLogLine.Timestamp
