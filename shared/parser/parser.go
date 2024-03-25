@@ -93,7 +93,7 @@ func ParseLogFiles() error {
 			if _, err := file.Seek(0, 0); err != nil {
 				return fmt.Errorf("error resetting file position: %v", err)
 			}
-			fmt.Printf("path %s\n", path)
+			//fmt.Printf("path %s\n", path)
 			if proceed {
 
 				scanner := bufio.NewScanner(file) // Use file directly, as it's already an io.Reader
