@@ -1,0 +1,5 @@
+192.168.1.10 - bingo [22/Mar/2024:10:30:45 +0100] "GET /index.html HTTP/1.1" 200 512 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.1234.567 Safari/537.36"
+10.0.0.5 - - [22/Mar/2024:11:15:20 +0100] "POST /api/data" 201 1200 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36"
+172.16.0.2 - - [22/Mar/2024:12:05:55 +0100] "GET /images/logo.png" 304 0 "Mozilla/5.0 (Linux; Android 11; SM-G975U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.1234.567 Mobile Safari/537.36"
+203.0.113.15 - - [22/Mar/2024:13:40:10 +0100] "GET /about" 404 0 "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0"
+198.51.100.7 - - [22/Mar/2024:14:20:30 +0100] "GET /products/item123" 200 890 "Mozilla/5.0 (iPhone; CPU iPhone OS 15_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1"
