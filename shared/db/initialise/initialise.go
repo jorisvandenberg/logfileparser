@@ -42,7 +42,7 @@ func InitialiseDb() error {
 		`CREATE TABLE IF NOT EXISTS "logline" (
             "timestamp" INTEGER NOT NULL,
             "bytes_sent" INTEGER,
-            "duration" TEXT,
+            "duration" INTEGER,
             "id_remote_ip" INTEGER,
             "id_remote_hostname" INTEGER,
             "id_remote_user" INTEGER,
@@ -78,77 +78,92 @@ func InitialiseDb() error {
             "cookie" TEXT NOT NULL UNIQUE,
             PRIMARY KEY("id" AUTOINCREMENT)
         );`,
+		`CREATE INDEX IF NOT EXISTS idx_cookie ON cookies (cookie);`,
 		`CREATE TABLE IF NOT EXISTS "finished_files" (
             "id" INTEGER NOT NULL UNIQUE,
             "hash" TEXT NOT NULL UNIQUE,
             PRIMARY KEY("id" AUTOINCREMENT)
         );`,
+		`CREATE INDEX IF NOT EXISTS idx_hash ON finished_files (hash);`,
 		`CREATE TABLE IF NOT EXISTS "headers" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"header"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_header ON headers (header);`,
 		`CREATE TABLE IF NOT EXISTS "http_protocol" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"protocol"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_protocol ON http_protocol (protocol);`,
 		`CREATE TABLE IF NOT EXISTS "query_parameters" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"parameters"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_parameters ON query_parameters (parameters);`,
 		`CREATE TABLE IF NOT EXISTS "referrer" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"referrer"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_referrer ON referrer (referrer);`,
 		`CREATE TABLE IF NOT EXISTS "remote_hostname" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"hostname"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_hostname ON remote_hostname (hostname);`,
 		`CREATE TABLE IF NOT EXISTS "remote_ip" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"ip"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_ip ON remote_ip (ip);`,
 		`CREATE TABLE IF NOT EXISTS "remote_logname" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"remote_logname"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_remote_logname ON remote_logname (remote_logname);`,
 		`CREATE TABLE IF NOT EXISTS "remote_user" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"user"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_user ON remote_user (user);`,
 		`CREATE TABLE IF NOT EXISTS "request_method" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"method"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_method ON request_method (method);`,
 		`CREATE TABLE IF NOT EXISTS "request_uri" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"uri"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_uri ON request_uri (uri);`,
 		`CREATE TABLE IF NOT EXISTS "server_name" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"server_name"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_server_name ON server_name (server_name);`,
 		`CREATE TABLE IF NOT EXISTS "status_code" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"code"	INTEGER NOT NULL UNIQUE,
 			"description"	TEXT,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_code ON status_code (code);`,
 		`CREATE TABLE IF NOT EXISTS "user_agent" (
 			"id"	INTEGER NOT NULL UNIQUE,
 			"user_agent"	TEXT NOT NULL UNIQUE,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);`,
+		`CREATE INDEX IF NOT EXISTS idx_user_agent ON user_agent (user_agent);`,
 		`INSERT OR IGNORE INTO "cookies" ("id", "cookie") VALUES (1, 'unset');`,
 		`INSERT OR IGNORE INTO "headers" ("id","header") VALUES (1,'unset');`,
 		`INSERT OR IGNORE INTO "http_protocol" ("id","protocol") VALUES (1,'unset');`,
