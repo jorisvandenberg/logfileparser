@@ -83,21 +83,15 @@ func AddLogLine(MyLogLine shared.LogLine) error {
 	id_status_code := GetIDS(db, false, MyLogLine.Status_code, "status_code", "code")
 	//fmt.Printf("%d %d %d %d %d %d %d %d %d %d %d %d %d %d\n", id_cookies, id_headers, id_http_protocol, id_query_parameters, id_referrer, id_remote_hostname, id_remote_ip, id_remote_logname, id_remote_user, id_request_method, id_request_uri, id_server_name, id_user_agent, id_status_code)
 	//now add logline if it doesn't already exist
-	var count int
+
 	myTimestamp := MyLogLine.Timestamp
 	unixTimestamp := myTimestamp.Unix()
 	myDuration := MyLogLine.Duration
 	durationInSeconds := int(myDuration.Seconds())
 
-	err = db.QueryRow("SELECT COUNT(*) FROM logline WHERE timestamp = ? and bytes_sent = ? and duration = ? and id_remote_ip = ? and id_remote_hostname = ? and id_remote_user = ? and id_request_method = ? and id_request_uri = ? and id_http_protocol = ? and id_status_code = ? and id_referrer = ? and id_user_agent = ? and id_cookies = ? and id_query_parameters = ? and id_headers = ? and id_server_name = ? and id_remote_logname = ? ", unixTimestamp, MyLogLine.Bytes_sent, durationInSeconds, id_remote_ip, id_remote_hostname, id_remote_user, id_request_method, id_request_uri, id_http_protocol, id_status_code, id_referrer, id_user_agent, id_cookies, id_query_parameters, id_headers, id_server_name, id_remote_logname).Scan(&count)
+	_, err = db.Exec("INSERT OR IGNORE INTO logline (timestamp, bytes_sent, duration, id_remote_ip, id_remote_hostname, id_remote_user, id_request_method, id_request_uri, id_http_protocol, id_status_code, id_referrer, id_user_agent, id_cookies, id_query_parameters, id_headers, id_server_name, id_remote_logname) VALUES (?, ? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", unixTimestamp, MyLogLine.Bytes_sent, durationInSeconds, id_remote_ip, id_remote_hostname, id_remote_user, id_request_method, id_request_uri, id_http_protocol, id_status_code, id_referrer, id_user_agent, id_cookies, id_query_parameters, id_headers, id_server_name, id_remote_logname)
 	if err != nil {
 		return err
-	}
-	if count == 0 {
-		_, err = db.Exec("INSERT INTO logline (timestamp, bytes_sent, duration, id_remote_ip, id_remote_hostname, id_remote_user, id_request_method, id_request_uri, id_http_protocol, id_status_code, id_referrer, id_user_agent, id_cookies, id_query_parameters, id_headers, id_server_name, id_remote_logname) VALUES (?, ? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", unixTimestamp, MyLogLine.Bytes_sent, durationInSeconds, id_remote_ip, id_remote_hostname, id_remote_user, id_request_method, id_request_uri, id_http_protocol, id_status_code, id_referrer, id_user_agent, id_cookies, id_query_parameters, id_headers, id_server_name, id_remote_logname)
-		if err != nil {
-			return err
-		}
 	}
 
 	return nil

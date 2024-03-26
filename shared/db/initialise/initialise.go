@@ -40,7 +40,6 @@ func InitialiseDb() error {
 
 	sqlStatements := []string{
 		`CREATE TABLE IF NOT EXISTS "logline" (
-            "id" INTEGER PRIMARY KEY AUTOINCREMENT,
             "timestamp" INTEGER NOT NULL,
             "bytes_sent" INTEGER,
             "duration" TEXT,
@@ -71,7 +70,8 @@ func InitialiseDb() error {
             FOREIGN KEY("id_query_parameters") REFERENCES "query_parameters"("id"),
             FOREIGN KEY("id_headers") REFERENCES "headers"("id"),
             FOREIGN KEY("id_server_name") REFERENCES "server_name"("id"),
-            FOREIGN KEY("id_remote_logname") REFERENCES "remote_logname"("id")
+            FOREIGN KEY("id_remote_logname") REFERENCES "remote_logname"("id"),
+			UNIQUE(timestamp, bytes_sent, duration, id_remote_ip, id_remote_hostname, id_remote_user, id_request_method, id_request_uri, id_http_protocol, id_status_code, id_referrer, id_user_agent, id_cookies, id_query_parameters, id_headers, id_server_name, id_remote_logname)
         );`,
 		`CREATE TABLE IF NOT EXISTS "cookies" (
             "id" INTEGER NOT NULL UNIQUE,
